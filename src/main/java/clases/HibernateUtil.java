@@ -44,42 +44,6 @@ public class HibernateUtil {
                 
                 Properties propiedades = new Properties();
                 
-                /*propiedades.put(Environment.DRIVER,configuracion.getHiber().getDriver());
-                                
-                propiedades.put(Environment.URL,configuracion.getConexion().getURL());
-                
-                propiedades.put(Environment.USER,configuracion.getConexion().getUser());
-                propiedades.put(Environment.PASS,configuracion.getConexion().getPassword());
-                
-                propiedades.put(Environment.DIALECT,configuracion.getHiber().getDialect());
-                
-                propiedades.put(Environment.HBM2DDL_AUTO,configuracion.getHiber().getHBM2DDL_AUTO());
-                
-                propiedades.put(Environment.SHOW_SQL,configuracion.getHiber().getSHOW_SQL());
-                
-                propiedades.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");                
-                propiedades.put(Environment.URL,"jdbc:mysql://192.168.56.101:3036/hibernate");
-                propiedades.put(Environment.USER,"userhibernate");
-                propiedades.put(Environment.PASS,"abc123.");                
-                propiedades.put(Environment.DIALECT,"org.hibernate.dialect.MySQL5Dialect");                
-                propiedades.put(Environment.HBM2DDL_AUTO,"update");                
-                propiedades.put(Environment.SHOW_SQL,true);
-                
-                conf.setProperties(propiedades);
-                
-                conf.addAnnotatedClass(Produto.class);
-                conf.addAnnotatedClass(Tenda.class);
-                conf.addAnnotatedClass(TendaProduto.class);
-                conf.addAnnotatedClass(Cliente.class);
-                conf.addAnnotatedClass(Empregado.class);
-                conf.addAnnotatedClass(Provincia.class);
-                conf.addAnnotatedClass(TendaEmpregado.class);
-                
-                
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
-                sesionFactory = conf.buildSessionFactory(serviceRegistry);*/
-                
-                
                 //Engadimos as propiedades
                 Properties settings = new Properties();
                 
