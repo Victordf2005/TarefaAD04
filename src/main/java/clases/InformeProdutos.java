@@ -5,10 +5,12 @@
  */
 package clases;
 
+
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class InformeProdutos {
  
     private int CodProduto;

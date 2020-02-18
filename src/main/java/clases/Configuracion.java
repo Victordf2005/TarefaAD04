@@ -7,8 +7,9 @@ package clases;
 
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class Configuracion {
     
     private  ConfiguracionConexion dbConnection = null;

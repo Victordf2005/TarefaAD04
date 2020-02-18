@@ -19,10 +19,12 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 
+
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class HibernateUtil {
     
     private static SessionFactory sesionFactory = null;

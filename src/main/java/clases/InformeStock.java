@@ -7,10 +7,12 @@ package clases;
 
 import java.util.ArrayList;
 
+
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class InformeStock {
     
     private ArrayList<InformeTendas> Tendas;

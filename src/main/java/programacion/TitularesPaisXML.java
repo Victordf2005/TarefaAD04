@@ -15,6 +15,7 @@ import java.util.ArrayList;
  *
  * @author Víctor Díaz
  */
+
 public class TitularesPaisXML extends DefaultHandler {
     
     private ArrayList<TitularPais> titularesPais;

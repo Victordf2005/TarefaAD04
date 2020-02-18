@@ -228,15 +228,10 @@ public class Main {
         System.exit(0);
     }
     
-    private static void cargarConfiguracion() {
-    
-        
-        
-    }
     
     private static void gravarProvincias() {
         
-        //Clase que garcará os datos das provincias       
+        //Clase que gardará os datos das provincias       
         Provincias provincias = new Provincias();        
         
         //cargar datos do arquivo JSON

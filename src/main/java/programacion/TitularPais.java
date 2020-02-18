@@ -10,6 +10,7 @@ package programacion;
  *
  * @author Víctor Díaz
  */
+
 public class TitularPais {
     
     String titular;

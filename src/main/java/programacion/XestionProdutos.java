@@ -29,6 +29,7 @@ import org.hibernate.Session;
 
 public class XestionProdutos {
     
+    // Método que pide datos do novo produto a engadir
     public static void engadirProduto() {
         
         Scanner teclado = new Scanner(System.in);
@@ -87,7 +88,7 @@ public class XestionProdutos {
         }
      }
     
-    
+    // Método que permite engadir un produto a unha tenda
     public static void engadirProdutoTenda() {
     
         Scanner teclado = new Scanner(System.in);
@@ -140,6 +141,7 @@ public class XestionProdutos {
         }        
      }
     
+    // Método que permite seleccionar un produto da listaxe que amosa
     private static String seleccionarProduto() {
     
         Scanner teclado = new Scanner(System.in);
@@ -174,6 +176,7 @@ public class XestionProdutos {
         return produto;
     }
     
+    // Método que permite seleccionar unha tenda da listaxe que amosa
     private static String seleccionarTenda() {
             
         Scanner teclado = new Scanner(System.in);
@@ -208,7 +211,7 @@ public class XestionProdutos {
         return tenda;
     }
            
-    
+    // Método para eliminar un produto a través do seu id
     public static void eliminarProduto() {
     
         Scanner teclado = new Scanner(System.in);
@@ -229,11 +232,15 @@ public class XestionProdutos {
 
         try {
             
+            // Buscamos o produto a eliminar
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query consulta = sesion.createQuery("select pr from Produto pr where pr.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Produto> produtos = consulta.getResultList();
+            
+            // Comprobamos se obtemos algún rexistro
                                     
             if (produtos.size() > 0) {
                 System.out.printf("Desexas eliminar o produto %s da franquicia (*) (S/N)?", produtos.get(0).getNome());
@@ -288,6 +295,7 @@ public class XestionProdutos {
         }
     }
     
+    // Método para eliminar un produto dunha tenda
     public static void eliminarProdutoTenda(){
                 
         Scanner teclado = new Scanner(System.in);
@@ -307,13 +315,16 @@ public class XestionProdutos {
         }
 
         try {
+            // Buscamos o produto a eliminar
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query consulta = sesion.createQuery("select tp from TendaProduto tp where tp.id=:i");
             consulta.setParameter("i",Integer.parseInt(id));
             List<TendaProduto> tendaProdutos = consulta.getResultList();
-                        
+
+            // Comprobamos se obtemos algún rexistro
+            
             if (tendaProdutos.size() > 0) {
                 System.out.printf("Desexas eliminar o produto con código %s (%s), con %s unidades de stock, da tenda %s, de %s (S/N)?",
                         tendaProdutos.get(0).getId(), tendaProdutos.get(0).getProduto().getNome(),
@@ -360,6 +371,7 @@ public class XestionProdutos {
         }       
     }
     
+    // Método que xera un informe en formato json con todos os produtos de todas as tendas
     public static void xerarInformeStockCompleto(){
         
         try {
@@ -368,6 +380,7 @@ public class XestionProdutos {
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
+            // Buscamos só as tendas que teñan produtos
             Query consulta = sesion.createQuery("select tp.tenda from TendaProduto tp group by tp.tenda");
             List<Tenda> tendasConProdutos = consulta.getResultList();
             
@@ -378,22 +391,28 @@ public class XestionProdutos {
                 ArrayList<InformeProdutos> produtosTenda = new ArrayList<InformeProdutos>();
                 
                 try {
+                    
+                    // Por cada tenda, buscamos os seus produtos
+                    
                     Session sesion2 = HibernateUtil.getSessionFactory().openSession();
                     Query consulta2 = sesion.createQuery("select tp from TendaProduto tp where tp.tenda=:t order by produto");
                     consulta2.setParameter("t", tcp);
                     List<TendaProduto> tendaProdutos = consulta2.getResultList();
                     
                     for (TendaProduto tp:tendaProdutos) {
+                                                                        
                         InformeProdutos ip = new InformeProdutos(tp.getProduto().getId(),
                                 tp.getProduto().getNome(),
                                 tp.getProduto().getDescricion(),
                                 tp.getProduto().getPrezo(),
                                 tp.getStock());
                     
+                        // Engadimos o produto á listaxe de produtos da tenda
                         produtosTenda.add(ip);
                     }
                     
                     if (produtosTenda.size() > 0) {
+                        // Engadimos a listaxe de produtos da tenda (se ten) ao informe
                         InformeTendas it = new InformeTendas(tcp.getId(), tcp.getNome(), tcp.getCidade(), tcp.getProvincia().getNome(), produtosTenda);
                         informeTendas.add(it);
                     }
@@ -403,8 +422,10 @@ public class XestionProdutos {
                     System.out.println("Erro buscando produtos da tenda.");
                 }
             }
+            
             InformeStock is = new InformeStock(informeTendas);
             
+            // Gardamos o informe en formato json
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(is);
                         
@@ -431,6 +452,7 @@ public class XestionProdutos {
                 
     }
     
+    // Método para actualizar o stock dun produto nunha tenda
     public static void actualizarStockProdutoTenda() {
     
         Scanner teclado = new Scanner(System.in);        

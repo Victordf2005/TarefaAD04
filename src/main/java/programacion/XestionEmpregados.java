@@ -19,6 +19,7 @@ import org.hibernate.Session;
  */
 public class XestionEmpregados {
     
+    // Método que pide os datos do novo empregado    
     public static void engadirEmpregado() {
         
         Scanner teclado = new Scanner(System.in);
@@ -64,6 +65,7 @@ public class XestionEmpregados {
         }
      }
     
+    // Método que amosa a listaxe de empregados e pide o código do empregado a eliminar
     public static void eliminarEmpregado() {
     
         Scanner teclado = new Scanner(System.in);
@@ -84,12 +86,16 @@ public class XestionEmpregados {
 
         try {
             
+            // Buscamos o empregado a eliminar
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query consulta = sesion.createQuery("select em from Empregado em where em.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Empregado> empregados = consulta.getResultList();
 
+            // Comprobamos se obtemos algún rexistro
+            
             if (empregados.size() > 0) {
                 
                 System.out.printf("Desexas eliminar o/a empregado/a %s %s (*) (S/N)?", empregados.get(0).getNome(), empregados.get(0).getApelidos());
@@ -112,6 +118,7 @@ public class XestionEmpregados {
         
     }
     
+    // Método para pedir e gravar o número de horas que traballa un empregado nunha tenda
     public static void rexistroHorasTraballadas() {
             
         Scanner teclado = new Scanner(System.in);
@@ -175,7 +182,7 @@ public class XestionEmpregados {
     
     }
     
-    
+    // Método para escoller un empregado da lista que amosa
     private static String seleccionarEmpregado() {
     
         Scanner teclado = new Scanner(System.in);
@@ -210,6 +217,7 @@ public class XestionEmpregados {
         return empregado;
     }
     
+    // Método para escoller unha tenda da lista que amosa    
     private static String seleccionarTenda() {
     
         

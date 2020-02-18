@@ -15,8 +15,10 @@ import org.hibernate.Session;
  *
  * @author Víctor Díaz
  */
+
 public class XestionTendas {
     
+    // Método que pide os datos da nova tenda a engadir
     public static void engadirTenda() {
         
         Scanner teclado = new Scanner(System.in);
@@ -68,6 +70,8 @@ public class XestionTendas {
         }
  
     }
+    
+    // Método que pide o Id da tenda a eliminar
     public static void eliminarTenda() {
     
         Scanner teclado = new Scanner(System.in);
@@ -88,12 +92,16 @@ public class XestionTendas {
 
         try {
             
+            // Buscamos a tenda a eliminar
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query consulta = sesion.createQuery("select te from Tenda te where te.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Tenda> tendas = consulta.getResultList();
                         
+            // Comprobamos que obtemos algún rexistro
+            
             if (tendas.size() > 0) {
                 
                 System.out.printf("Desexas eliminar a tenda %s de %s (*) (S/N)?", tendas.get(0).getNome(), tendas.get(0).getCidade());
@@ -120,6 +128,7 @@ public class XestionTendas {
         System.out.println(">>>>> A tenda non foi engadida.");
     }
     
+    // Método que permite seleccionar a provincia na que radica a tenda
     private static String seleccionarProvincia() {
         
         Scanner teclado = new Scanner(System.in);

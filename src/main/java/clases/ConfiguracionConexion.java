@@ -9,8 +9,9 @@ import java.io.Serializable;
 
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class ConfiguracionConexion implements Serializable {
     
     private String address="";

@@ -7,10 +7,12 @@ package clases;
 
 import java.util.ArrayList;
 
+
 /**
  *
- * @author clatvdf
+ * @author Víctor Díaz
  */
+
 public class InformeTendas {
     
     private int CodTenda;

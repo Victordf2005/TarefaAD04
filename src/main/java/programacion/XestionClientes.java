@@ -16,6 +16,8 @@ import org.hibernate.Session;
 
 public class XestionClientes {
     
+    // Método para pedir datos do novo cliente
+    
     public static void engadirCliente() {
         
         Scanner teclado = new Scanner(System.in);
@@ -74,6 +76,8 @@ public class XestionClientes {
         System.out.println(">>>>> O/A cliente/a NON foi engadido/a.");
     }    
     
+    // Método que amosa a listaxe de cliente e pide o código do cliente a eliminar
+    
     public static void eliminarCliente() {
     
         Scanner teclado = new Scanner(System.in);
@@ -93,13 +97,15 @@ public class XestionClientes {
         }
 
         try {
-            
+        
+            // Buscamos o cliente a eliminar
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             
             Query consulta = sesion.createQuery("select cl from Clientes cl where cl.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));            
             List<Cliente> clientes = consulta.getResultList();
             
+            // Comprobamos se obtemos algún rexistro            
             if (clientes.size()>0) {
                 
                 System.out.printf("Desexas eliminar o/a cliente/a %s %s (S/N)?", clientes.get(0).getNome(), clientes.get(0).getApelidos());

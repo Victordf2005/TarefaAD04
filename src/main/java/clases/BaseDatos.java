@@ -15,8 +15,7 @@ public class BaseDatos {
         
     /*
     Engadir nova tenda á base de datos
-    */
-    
+    */    
     public static void engadirTenda(String nome, String codProvincia, String cidade) {
         
         Provincia prov = getProvincia(codProvincia);
@@ -52,15 +51,19 @@ public class BaseDatos {
                 
         try {
             
+            // Obtemos da base de datos a tenda a eliminar
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select te from Tenda te where te.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Tenda> tendas = consulta.getResultList();
             
+            // Comprobamos se obtemos algún rexistro.
             if (tendas.size() >0) {
             
                 tran = sesion.beginTransaction();
-
+                
+                // Eliminamos a tenda
                 sesion.delete(tendas.get(0));
 
                 tran.commit();
@@ -139,15 +142,21 @@ public class BaseDatos {
                 
         try {
             
+            // Obtemos da base de datos o produto a eliminar
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select pr from Produto pr where pr.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Produto> produtos = consulta.getResultList();
             
+            // Comprobamos se obtemos algún rexistro
+            
             if (produtos.size() >0) {
             
                 tran = sesion.beginTransaction();
 
+                // Eliminamos o produto
+                
                 sesion.delete(produtos.get(0));
 
                 tran.commit();
@@ -168,15 +177,20 @@ public class BaseDatos {
                 
         try {
             
+            // Obtemos o produto a eliminar dunha tenda a través do id do rexistro
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select tp from TendaProduto tp where tp.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<TendaProduto> TendaProdutos = consulta.getResultList();
             
+            // Comprobamos que obtemos algún rexistro
+            
             if (TendaProdutos.size() >0) {
             
                 tran = sesion.beginTransaction();
 
+                // Eliminamos o produto dunha tenda
                 sesion.delete(TendaProdutos.get(0));
 
                 tran.commit();
@@ -211,6 +225,7 @@ public class BaseDatos {
             id = teclado.nextLine();
         }
         
+        // Comprobamos se existe a tenda da que queremos listar produtos        
         if (existeTenda(id)) {
             
             Tenda t = getTenda(id);
@@ -302,16 +317,21 @@ public class BaseDatos {
                 
         try {
             
+            // Buscamos o produto da tenda que queremos actualizar, a través do id de rexistro
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select tp from TendaProduto tp where tp.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<TendaProduto> TendaProdutos = consulta.getResultList();
+            
+            // Comprobamos se obtemos algún rexistro
             
             if (TendaProdutos.size() >0) {
             
                 tran = sesion.beginTransaction();
                 TendaProdutos.get(0).setStock(Integer.parseInt(stock));
                 
+                // actualizamos stock
                 sesion.update(TendaProdutos.get(0));
 
                 tran.commit();
@@ -359,16 +379,20 @@ public class BaseDatos {
         System.out.println(id);
                 
         try {
+            // Obtemos o empregado a eliminar
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select em from Empregado em where em.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Empregado> empregados = consulta.getResultList();
             
+            //Comprobamos se obtemos algún rexistro
+            
             if (empregados.size() >0) {
             
                 tran = sesion.beginTransaction();
 
+                // Eliminamos
                 sesion.delete(empregados.get(0));
 
                 tran.commit();
@@ -500,16 +524,20 @@ public class BaseDatos {
         Transaction tran = null;
                 
         try {
+            // Buscamos o cliente a eliminar
             
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Query consulta = sesion.createQuery("select cl from Cliente cl where cl.id=:i");
             consulta.setParameter("i", Integer.parseInt(id));
             List<Cliente> clientes = consulta.getResultList();
             
+            // Comprobamos se obtemos algún rexistro
+            
             if (clientes.size() >0) {
             
                 tran = sesion.beginTransaction();
 
+                // Eliminamos
                 sesion.delete(clientes.get(0));
 
                 tran.commit();
@@ -551,6 +579,8 @@ public class BaseDatos {
         }
     }
     
+    
+    // Método para comprobar se existe un rexistro un determinado id nunha determinada táboa
     
     private static boolean existe(String id, String taboa ) {
         
@@ -640,6 +670,7 @@ public class BaseDatos {
                 
                 provincia = provincias.getProvincias().get(i);
                 
+                // Actualiza ou grava a provincia dependendo de se xa existe ou non na base de datos
                 sesion.saveOrUpdate(provincia);
             }
             
@@ -655,6 +686,7 @@ public class BaseDatos {
                 
     }
     
+    // Método que devolve un obxecto provincia a través do seu id
     private static Provincia getProvincia(String codProvincia) {
     
         Provincia prov = null;
@@ -677,7 +709,7 @@ public class BaseDatos {
         
     }
     
-    
+    // Método que devolve un obxecto produto a través do seu id
     private static Produto getProduto(String codigo) {
     
         Produto p = null;
@@ -700,7 +732,7 @@ public class BaseDatos {
         
     }
     
-    
+    // Método que devolve un obxecto tenda a través do seu id
     private static Tenda getTenda(String codigo) {
     
         Tenda t = null;
@@ -723,7 +755,7 @@ public class BaseDatos {
         
     }
     
-    
+    // Método que devolve un obxecto empregado a través do seu id
     private static Empregado getEmpregado(String codigo) {
     
         Empregado e = null;
