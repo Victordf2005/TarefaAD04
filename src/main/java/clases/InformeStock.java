@@ -13,13 +13,13 @@ import java.util.ArrayList;
  */
 public class InformeStock {
     
-    private ArrayList<InformeTendas> informeTendas;
+    private ArrayList<InformeTendas> Tendas;
 
     public InformeStock() {
     }
 
     public InformeStock(ArrayList<InformeTendas> informeTendas) {
-        this.informeTendas = informeTendas;
+        this.Tendas = informeTendas;
     }
     
 }

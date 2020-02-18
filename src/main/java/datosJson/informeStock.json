@@ -1,0 +1,41 @@
+{
+  "Tendas": [
+    {
+      "CodTenda": 23,
+      "NomeTenda": "Lugo centro",
+      "CidadeTenda": "Sarria",
+      "ProvinciaTenda": "Lugo",
+      "Produtos": [
+        {
+          "CodProduto": 26,
+          "NomeProduto": "Monitor",
+          "DescricionProduto": "Monitor 17",
+          "PrezoProduto": 100.0,
+          "StockEnTenda": 10
+        },
+        {
+          "CodProduto": 27,
+          "NomeProduto": "Monitor 19",
+          "DescricionProduto": "Monitor 19 p",
+          "PrezoProduto": 110.0,
+          "StockEnTenda": 15
+        }
+      ]
+    },
+    {
+      "CodTenda": 25,
+      "NomeTenda": "Lugo Sur",
+      "CidadeTenda": "Monforte",
+      "ProvinciaTenda": "Lugo",
+      "Produtos": [
+        {
+          "CodProduto": 26,
+          "NomeProduto": "Monitor",
+          "DescricionProduto": "Monitor 17",
+          "PrezoProduto": 100.0,
+          "StockEnTenda": 10
+        }
+      ]
+    }
+  ]
+}

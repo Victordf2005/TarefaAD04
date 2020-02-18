@@ -73,7 +73,7 @@ public class Main {
                     break;
                 }
                 
-                case "VS" : {
+                case "VST" : {
                     XestionProdutos.verStockProdutoTenda();
                     break;
                 }
@@ -90,6 +90,10 @@ public class Main {
                 
                 case "VPT" : {
                     BaseDatos.listarProdutosTenda(true);
+                    break;
+                }
+                case "VSF" : {
+                    XestionProdutos.xerarInformeStockCompleto();
                     break;
                 }
 
@@ -169,8 +173,9 @@ public class Main {
         System.out.println("PRODUTOS -> Engadir a unha tenda (+PT)");
         System.out.println("PRODUTOS -> Eliminar dunha tenda (-PT)");
         System.out.println("PRODUTOS -> Ver produtos dunha tenda (VPT)");
-        System.out.println("PRODUTOS -> Ver stock dun produto dunha tenda (VS)");
+        System.out.println("PRODUTOS -> Ver stock dun produto dunha tenda (VST)");
         System.out.println("PRODUTOS -> Actualizar stock dun produto dunha tenda (AS)\n");
+        System.out.println("PRODUTOS -> Xerar informe de stock de todos os produtos da franquicia (VSF)\n");
         System.out.println("EMPREGADOS -> Engadir (+E)");
         System.out.println("EMPREGADOS -> Eliminar (-E)");
         System.out.println("EMPREGADOS -> Ver empregados (VE)");

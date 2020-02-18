@@ -2,9 +2,21 @@
 package programacion;
 
 import clases.BaseDatos;
+import clases.Cliente;
 import clases.HibernateUtil;
+import clases.InformeProdutos;
+import clases.InformeStock;
+import clases.InformeTendas;
 import clases.Produto;
+import clases.Tenda;
 import clases.TendaProduto;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.persistence.Query;
@@ -346,6 +358,77 @@ public class XestionProdutos {
                 
             }
         }       
+    }
+    
+    public static void xerarInformeStockCompleto(){
+        
+        try {
+            
+            File arquivo = new File("src/main/java/datosJson/informeStock.json");
+            
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            
+            Query consulta = sesion.createQuery("select tp.tenda from TendaProduto tp group by tp.tenda");
+            List<Tenda> tendasConProdutos = consulta.getResultList();
+            
+            ArrayList<InformeTendas> informeTendas = new ArrayList<InformeTendas>();
+            
+            for (Tenda tcp:tendasConProdutos) {
+                
+                ArrayList<InformeProdutos> produtosTenda = new ArrayList<InformeProdutos>();
+                
+                try {
+                    Session sesion2 = HibernateUtil.getSessionFactory().openSession();
+                    Query consulta2 = sesion.createQuery("select tp from TendaProduto tp where tp.tenda=:t order by produto");
+                    consulta2.setParameter("t", tcp);
+                    List<TendaProduto> tendaProdutos = consulta2.getResultList();
+                    
+                    for (TendaProduto tp:tendaProdutos) {
+                        InformeProdutos ip = new InformeProdutos(tp.getProduto().getId(),
+                                tp.getProduto().getNome(),
+                                tp.getProduto().getDescricion(),
+                                tp.getProduto().getPrezo(),
+                                tp.getStock());
+                    
+                        produtosTenda.add(ip);
+                    }
+                    
+                    if (produtosTenda.size() > 0) {
+                        InformeTendas it = new InformeTendas(tcp.getId(), tcp.getNome(), tcp.getCidade(), tcp.getProvincia().getNome(), produtosTenda);
+                        informeTendas.add(it);
+                    }
+                }
+
+                catch (Exception erro) {
+                    System.out.println("Erro buscando produtos da tenda.");
+                }
+            }
+            InformeStock is = new InformeStock(informeTendas);
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(is);
+                        
+            try {
+                FileWriter fluxoSaida = new FileWriter(arquivo);
+                BufferedWriter saida = new BufferedWriter(fluxoSaida);
+                saida.write(json);
+                saida.close();
+                
+                System.out.println("\n>>>>>> INFORME XERADO CORRECTAMENTE");
+                
+            }
+            catch (IOException erro) {
+                System.out.println("Erro gardando o informe json: " + erro.getMessage());
+            }
+            
+        }
+        
+        catch (Exception erro) {
+            System.out.println("Erro xerando o informe: " + erro.getMessage());
+        }
+        
+                    
+                
     }
     
     public static void actualizarStockProdutoTenda() {
