@@ -10,9 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -37,7 +35,8 @@ public class HibernateUtil {
         if(sesionFactory == null) {
             
             if (configuracion == null) {
-                cargarConfiguracion(configuracion);
+                cargarConfiguracion();
+                
             }
         
             try {
@@ -56,9 +55,9 @@ public class HibernateUtil {
                 
                 propiedades.put(Environment.HBM2DDL_AUTO,configuracion.getHiber().getHBM2DDL_AUTO());
                 
-                propiedades.put(Environment.SHOW_SQL,configuracion.getHiber().getSHOW_SQL());*/
+                propiedades.put(Environment.SHOW_SQL,configuracion.getHiber().getSHOW_SQL());
                 
-                /*propiedades.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");                
+                propiedades.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");                
                 propiedades.put(Environment.URL,"jdbc:mysql://192.168.56.101:3036/hibernate");
                 propiedades.put(Environment.USER,"userhibernate");
                 propiedades.put(Environment.PASS,"abc123.");                
@@ -85,23 +84,23 @@ public class HibernateUtil {
                 Properties settings = new Properties();
                 
                 //Indicamos o conector da base de datos que vamos a usar
-                settings.put(Environment.DRIVER,"com.mysql.cj.jdbc.Driver");
+                settings.put(Environment.DRIVER,configuracion.getHiber().getDriver());
                 
                 //Indicamos a localización da base de datos que vamos a utilizar
-                settings.put(Environment.URL,"jdbc:mysql://192.168.56.101:3306/hibernate");
+                settings.put(Environment.URL,configuracion.getConexion().getURL());
                 
                 //Indicamos o usuario da base de datos con cal nos vamos conectar e o seu contrasinal
-                settings.put(Environment.USER,"userhibernate");
-                settings.put(Environment.PASS,"abc123.");
+                settings.put(Environment.USER,configuracion.getConexion().getUser());
+                settings.put(Environment.PASS,configuracion.getConexion().getPassword());
                 
                 //Indicamos o dialecto que ten que usar Hibernate 
-                settings.put(Environment.DIALECT,"org.hibernate.dialect.MySQL5Dialect");
+                settings.put(Environment.DIALECT,configuracion.getHiber().getDialect());
                 
                 //Indicamos que se as táboas todas se borren e se volvan crear
-                settings.put(Environment.HBM2DDL_AUTO, "update");
+                settings.put(Environment.HBM2DDL_AUTO, configuracion.getHiber().getHBM2DDL_AUTO());
                 
                 //Indicamos que se mostre as operacións SQL que Hibernate leva a cabo
-                settings.put(Environment.SHOW_SQL, "true");
+                settings.put(Environment.SHOW_SQL, configuracion.getHiber().getSHOW_SQL());
                 conf.setProperties(settings);
                 
                 //Engaidmos aquelas clases nas que queremos facer persistencia
@@ -125,7 +124,7 @@ public class HibernateUtil {
         return sesionFactory;
     }
     
-    private static void cargarConfiguracion(Configuracion configuracion) {
+    private static void cargarConfiguracion() {
                 
         //cargar datos do arquivo JSON
         File arquivo = new File("src/main/java/datosJson/config.json");
@@ -158,7 +157,7 @@ public class HibernateUtil {
                 configuracion = gson.fromJson(json, Configuracion.class);
                 
             } catch (IOException erro) {
-                System.out.println("Erro cargando listaxe de provincias:\n" + erro.getMessage());
+                System.out.println("Erro cargando configuración HibernateUtil:\n" + erro.getMessage());
             }
         }
            
