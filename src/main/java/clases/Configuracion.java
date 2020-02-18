@@ -18,25 +18,25 @@ public class Configuracion {
     }
 
     
-    public Configuracion(ConfiguracionConexion conexion, ConfiguracionHibernate hiber) {
-        this.dbConnection = conexion;
-        this.hibernate = hiber;
+    public Configuracion(ConfiguracionConexion dbConnection, ConfiguracionHibernate hibernate) {
+        this.dbConnection = dbConnection;
+        this.hibernate = hibernate;
     }
 
     public  ConfiguracionConexion getConexion() {
         return dbConnection;
     }
 
-    public  void setConexion(ConfiguracionConexion conexion) {
-        this.dbConnection = conexion;
+    public  void setConexion(ConfiguracionConexion dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     public  ConfiguracionHibernate getHiber() {
         return hibernate;
     }
 
-    public  void setHiber(ConfiguracionHibernate hiber) {
-        this.hibernate = hiber;
+    public  void setHiber(ConfiguracionHibernate hibernate) {
+        this.hibernate = hibernate;
     }
     
 }
